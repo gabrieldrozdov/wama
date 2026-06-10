@@ -1,0 +1,396 @@
+
+@font-face {
+	font-family: "Tay Lulu";
+	src: url("assets/fonts/tay-lula.woff2");
+}
+@font-face {
+	font-family: "Nunito";
+	src: url("assets/fonts/nunito.woff2");
+	font-weight: 200 1000;
+}
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	scroll-behavior: smooth;
+}
+:root {
+	--wama-purple: #491D2F;
+	--wama-orange: #C36337;
+	--wama-pink: #E5C0D7;
+}
+body {
+	background-color: #F4F3EE;
+}
+.wama-guide {
+	display: grid;
+	grid-template-columns: 1.5fr minmax(400px, 1fr);
+	font-family: "Nunito";
+	position: relative;
+	height: 100dvh;
+	overflow: scroll;
+	width: 100vw;
+}
+.wama-guide-logo {
+	position: fixed;
+	top: 10px;
+	left: 10px;
+	z-index: 99999;
+	transition: transform .2s;
+}
+.wama-guide-logo:hover {
+	transform: scale(1.05);
+}
+.wama-guide-logo:active {
+	transform: scale(0.9);
+}
+.wama-guide-logo img {
+	width: 160px;
+}
+.wama-guide-map {
+	position: sticky !important;
+	top: 0;
+	width: 100%;
+	height: 100vh;
+}
+.wama-guide-map-marker {
+	transform-origin: center bottom;
+	transition: .5s;
+	width: 24px;
+	height: 24px;
+}
+.leaflet-marker-icon[data-active="1"] {
+	z-index: 999 !important;
+}
+.leaflet-marker-icon[data-active="1"] .wama-guide-map-marker {
+	transform: scale(1.2);
+}
+.wama-guide-map-marker-index {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 24px;
+	height: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	font-family: "Tay Lulu";
+	padding-top: .2em;
+	z-index: 2;
+}
+.wama-guide-map-marker-pin {
+	fill: var(--primary);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 24px;
+	display: block;
+	height: 30px;
+}
+.leaflet-map-pane svg {
+	z-index: 1;
+}
+.leaflet-control-zoom {
+	display: none;
+}
+.leaflet-control-attribution {
+	display: none;
+}
+.wama-guide-jump {
+	margin-left: -20px;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	align-items: end;
+	background-color: unset;
+	position: sticky;
+	bottom: 0;
+	z-index: 9;
+}
+.wama-guide-jump-link {
+	border-radius: 100px 100px 0 0;
+	background-color: var(--primary);
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: "Tay Lulu";
+	color: white;
+	font-size: 24px;
+	line-height: 1em;
+	padding: calc(10px + .2em) 15px 10px 15px;
+	transition: padding .2s;
+}
+.wama-guide-jump-link:hover {
+	padding: calc(20px + .2em) 15px 20px 15px;
+}
+.wama-guide-jump-link:active {
+	padding: calc(15px + .2em) 15px 15px 15px;
+}
+.wama-guide-list {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	z-index: 999;
+	background-color: white;
+}
+.wama-guide-list-group {
+	display: flex;
+	flex-direction: column;
+}
+.wama-guide-list-group-heading {
+	font-size: 32px;
+	line-height: 1em;
+	display: flex;
+	white-space: nowrap;
+	background-color: var(--primary);
+	margin-left: -20px;
+	font-weight: normal;
+	color: white;
+	font-family: "Tay Lulu";
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	overflow: hidden;
+	box-shadow: 5px 5px 10px rgba(0,0,0,.15);
+}
+.wama-guide-list-group-heading > div {
+	animation: wama-marquee 100s infinite linear;
+	padding: calc(15px + .2em) 0 15px 0;
+	display: flex;
+}
+.wama-guide-list-group-heading > div > span {
+	padding-right: 30px;
+	animation: wama-marquee-span 1s infinite ease-in-out alternate;
+}
+.wama-guide-list-group-heading > div > span:nth-child(odd) {
+	animation: wama-marquee-span 1s infinite ease-in-out alternate-reverse;
+}
+@keyframes wama-marquee {
+	from {
+		transform: translateX(0%);
+	}
+	to {
+		transform: translateX(-100%);
+	}
+}
+@keyframes wama-marquee-span {
+	from {
+		transform: translateY(-2px);
+	}
+	to {
+		transform: translateY(2px);
+	}
+}
+.wama-guide-list-group-items {
+	display: flex;
+	flex-direction: column;
+	gap: 1px;
+}
+.wama-guide-list-group-item {
+	align-items: center;
+	padding: 10px 15px 10px 40px;
+	background-color: white;
+	transition: background-color .2s;
+	position: relative;
+	color: black;
+}
+.wama-guide-list-group-item[data-active="1"] {
+	background: var(--primary);
+	color: white;
+}
+.wama-guide-list-group-item-index {
+	border-radius: 50%;
+	color: white;
+	font-size: 18px;
+	width: 40px;
+	height: 40px;
+	background-color: var(--primary);
+	font-family: "Tay Lulu";
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: .1em;
+	transform: scale(1) translate(-20px, -50%);
+	transform-origin: left top;
+	position: absolute;
+	box-shadow: 2px 2px 5px rgba(0,0,0,.15);
+	top: 50%;
+	left: 0;
+	transition: background-color .2s, color .2s;
+}
+.wama-guide-list-group-item[data-active="1"] .wama-guide-list-group-item-index {
+	background-color: white;
+	color: var(--primary);
+}
+.wama-guide-list-group-item-content {
+	display: flex;
+	gap: 5px;
+	flex-direction: column;
+}
+.wama-guide-list-group-item-title {
+	font-size: 24px;
+	line-height: 1em;
+	font-weight: normal;
+	font-family: "Tay Lulu";
+	text-wrap: balance;
+	padding-top: .2em;
+	transition: color .2s;
+}
+.wama-guide-list-group-item-title a {
+	color: inherit;
+	text-decoration: none;
+	transition: opacity .2s;
+}
+.wama-guide-list-group-item-title a:hover {
+	opacity: .5;
+}
+.wama-guide-list-group-item-title a:active {
+	opacity: .25;
+}
+.wama-guide-list-group-item-info {
+	font-size: 14px;
+	line-height: 1.2em;
+	display: flex;
+	gap: .25em 1em;
+	flex-wrap: wrap;
+}
+.wama-guide-list-group-item-link {
+	text-decoration: none;
+	color: inherit;
+	opacity: .25;
+	font-weight: 700;
+	transition: opacity .2s, color .2s;
+}
+.wama-guide-list-group-item-link:hover {
+	opacity: 1;
+}
+.wama-guide-list-group-item-link:active {
+	opacity: .5;
+}
+.leaflet-tile-pane {
+	filter: grayscale(100%) brightness(99%);
+}
+.leaflet-fade-anim .leaflet-popup {
+	transition: unset;
+}
+.leaflet-popup-content-wrapper {
+	margin-bottom: 20px;
+	box-shadow: 5px 5px 10px rgba(0,0,0,.15);
+	border-radius: 0;
+	width: min(320px, 80vw);
+	background-color: white;
+	overflow: hidden;
+	padding: 15px;
+}
+.leaflet-popup-tip {
+	display: none;
+}
+.leaflet-popup-content {
+	width: 100% !important;
+	margin: 0;
+}
+.wama-guide-map-popup {
+	color: black;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+.wama-guide-map-popup-image {
+	aspect-ratio: 1/1;
+	object-fit: cover;
+	background-color: gray;
+	width: 100%;
+}
+.wama-guide-map-popup-title {
+	font-size: 18px;
+	line-height: 1em;
+	font-weight: normal;
+	font-family: "Tay Lulu";
+	text-wrap: balance;
+	padding-top: .2em;
+}
+.wama-guide-map-popup-title a {
+	color: inherit;
+	text-decoration: none;
+	transition: opacity .2s;
+}
+.wama-guide-map-popup-title a:hover {
+	opacity: .5;
+}
+.wama-guide-map-popup-title a:active {
+	opacity: .25;
+}
+.wama-guide-map-popup-info {
+	font-size: 14px;
+	line-height: 1.2em;
+	display: flex;
+	flex-direction: column;
+	gap: .25em 1em;
+	font-family: "Nunito";
+}
+.wama-guide-map-popup-info a {
+	color: inherit;
+	text-decoration: none;
+	font-weight: 700;
+	transition: opacity .2s, color .2s;
+	opacity: .25;
+}
+.wama-guide-map-popup-info a:hover {
+	opacity: 1;
+}
+.wama-guide-map-popup-info a:active {
+	opacity: .25;
+}
+.leaflet-container a.leaflet-popup-close-button {
+	background-color: black;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-bottom: .1em;
+	border-radius: 50%;
+	top: 5px;
+	right: 5px;
+}
+.leaflet-container a.leaflet-popup-close-button:hover span {
+	opacity: 1 !important;
+}
+@media only screen and (max-width: 800px) {
+	.wama-guide {
+		grid-template-columns: 1fr;
+	}
+	.wama-guide-logo {
+		position: absolute;
+	}
+	.wama-guide-map {
+		height: 75vh;
+		position: relative !important;
+		width: 100vw !important;
+		overflow: hidden;
+	}
+	.leaflet-tile-pane {
+		/* overflow: hidden; */
+		width: 100vw;
+		height: 75vh;
+	}
+	.wama-guide-list-group {
+		width: 100vw;
+	}
+	.wama-guide-list-group-item {
+		padding: 10px 15px 10px 55px;
+	}
+	.wama-guide-list-group-item-index {
+		font-size: 16px;
+		width: 35px;
+		height: 35px;
+		transform: scale(1) translate(0px, -50%);
+		left: 10px;
+	}
+	.wama-guide-jump {
+		margin-left: 0;
+	}
+	.wama-guide-list-group-heading {
+		margin-left: 0;
+	}
+}
