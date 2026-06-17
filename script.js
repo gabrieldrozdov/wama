@@ -85,7 +85,7 @@ function generateWAMAMap() {
 			}
 
 			sectionTemp += `
-				<div onmouseenter="highlightOnMap(${i});" class="wama-guide-list-group-item" data-guide-index="${i}">
+				<div onmouseenter="highlightOnMap(${i});" onclick="highlightOnMapMobile(${i});" class="wama-guide-list-group-item" data-guide-index="${i}">
 					<div class="wama-guide-list-group-item-index">
 						${i}
 					</div>
@@ -126,6 +126,7 @@ function generateWAMAMap() {
 	}
 	let elmnt = document.querySelector('.wama-guide-list');
 	elmnt.innerHTML = `
+		<button class="wama-guide-mobile-return" onclick="toggleDirectory();">Open Map</button>
 		${temp}
 		<div class="wama-guide-jump">
 			${jumpTemp}
@@ -134,6 +135,22 @@ function generateWAMAMap() {
 }
 
 // highlight from list interaction
+function highlightOnMapMobile(index) {
+	if (window.innerWidth >= 800) {
+		return
+	}
+	closeDirectory();
+
+	// fly to location
+	let currentBiz = businessesRaw[index-1];
+	let offset = 0;
+	if (currentBiz.image != "") {
+		offset = 0.0005;
+	}
+	map.flyTo([currentBiz.latitude + offset, currentBiz.longitude], 18);
+
+	showMapInfo(index)
+}
 function highlightOnMap(index) {
 	if (window.innerWidth < 800) {
 		return
@@ -234,4 +251,20 @@ function showMapInfo(index) {
 		.setLatLng([biz.latitude, biz.longitude])
 		.setContent(popupTemp)
 		.openOn(map);
+}
+
+let directory = false;
+function toggleDirectory() {
+	directory = !directory;
+	let guide = document.querySelector('.wama-guide');
+	if (directory) {
+		guide.dataset.menu = 1;
+	} else {
+		guide.dataset.menu = 0;
+	}
+}
+function closeDirectory() {
+	directory = false;
+	let guide = document.querySelector('.wama-guide');
+	guide.dataset.menu = 0;
 }

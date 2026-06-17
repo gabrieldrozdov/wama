@@ -134,9 +134,8 @@ body {
 	z-index: 999;
 	background-color: white;
 }
-.wama-guide-list-group {
-	display: flex;
-	flex-direction: column;
+.wama-guide-list-group:nth-child(4) {
+	padding-bottom: 50vh;
 }
 .wama-guide-list-group-heading {
 	font-size: 32px;
@@ -356,15 +355,70 @@ body {
 .leaflet-container a.leaflet-popup-close-button:hover span {
 	opacity: 1 !important;
 }
+
+/* MOBILE */
+.wama-guide-mobile-directory {
+	border: unset;
+	border-radius: 100px 100px 0 0;
+	background-color: var(--wama-orange);
+	text-decoration: none;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	font-family: "Tay Lulu";
+	color: white;
+	font-size: 24px;
+	line-height: 1em;
+	padding: calc(10px + .2em) 15px 10px 15px;
+	transition: padding .2s;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	cursor: pointer;
+	z-index: 999;
+}
+.wama-guide-mobile-directory:hover {
+	padding: calc(20px + .2em) 15px 20px 15px;
+}
+.wama-guide-mobile-directory:active {
+	padding: calc(15px + .2em) 15px 15px 15px;
+}
+.wama-guide-mobile-return {
+	border: unset;
+	background-color: #222;
+	text-decoration: none;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	font-family: "Tay Lulu";
+	color: white;
+	font-size: 24px;
+	line-height: 1em;
+	padding: calc(10px + .2em) 15px 10px 15px;
+	transition: padding .2s;
+	position: sticky;
+	top: 0;
+	cursor: pointer;
+	min-height: 48px;
+	z-index: 999;
+}
 @media only screen and (max-width: 800px) {
+	.wama-guide-mobile-directory {
+		display: flex;
+	}
+	.wama-guide-mobile-return {
+		display: flex;
+	}
 	.wama-guide {
 		grid-template-columns: 1fr;
+		overflow: hidden;
 	}
 	.wama-guide-logo {
 		position: absolute;
 	}
 	.wama-guide-map {
-		height: 75vh;
+		height: 100dvh;
 		position: relative !important;
 		width: 100vw !important;
 		overflow: hidden;
@@ -374,11 +428,23 @@ body {
 		width: 100vw;
 		height: 75vh;
 	}
+	.wama-guide-list {
+		position: absolute;
+		transform: translateY(100%);
+		transition: transform .5s;
+		z-index: 999999;
+		height: 100dvh;
+		overflow: auto;
+	}
+	.wama-guide[data-menu="1"] .wama-guide-list {
+		transform: translateY(0%);
+	}
 	.wama-guide-list-group {
 		width: 100vw;
 	}
 	.wama-guide-list-group-item {
 		padding: 10px 15px 10px 55px;
+		cursor: pointer;
 	}
 	.wama-guide-list-group-item-index {
 		font-size: 16px;
@@ -392,5 +458,9 @@ body {
 	}
 	.wama-guide-list-group-heading {
 		margin-left: 0;
+		top: 48px;
+	}
+	.wama-guide-list-group-item-content {
+		pointer-events: none;
 	}
 }

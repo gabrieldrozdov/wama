@@ -5,6 +5,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>WAMA Walking Guide</title>
 
+	<meta name="author" content="WAMA / No Replica">
+	<meta name="keywords" content="Shop Local, Local Businesses, Business Directory">
+	<meta name="description" content="Wickenden Street in Providence, Rhode Island is a popular destination for families, students of the area's colleges and schools, locals and tourists alike.">
+	<meta property="og:url" content="https://map.shopwickenden.com/">
+	<meta name="og:title" property="og:title" content="WAMA Walking Guide">
+	<meta property="og:description" content="Wickenden Street in Providence, Rhode Island is a popular destination for families, students of the area's colleges and schools, locals and tourists alike.">
+	<meta property="og:image" content="assets/meta/opengraph.jpg">
+	<link rel="icon" type="png" href="assets/meta/favicon.png">
+
 	<!-- Leaflet’s custom CSS -->
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
 	integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
@@ -19,11 +28,12 @@
 </head>
 <body>
 	
-	<div class="wama-guide">
+	<div class="wama-guide" data-menu="0">
 		<a href="https://www.shopwickenden.com/" class="wama-guide-logo" target="_blank">
 			<img src="assets/images/wama-logo.png">
 		</a>
 		<div class="wama-guide-map" id="wama-guide-map"></div>
+		<button class="wama-guide-mobile-directory" onclick="toggleDirectory();">Directory</button>
 		<div class="wama-guide-list"></div>
 	</div>
 
