@@ -107,8 +107,8 @@ let businesses = {
 			"phone": "401-388-0660",
 			"url": "https://prettysnake.com/",
 			"image": "",
-			"latitude": 41.8204547,
-			"longitude": -71.3985158
+			"latitude": 41.820402035506106,
+			"longitude": -71.39854340282352
 		},
 		{
 			"name": "Knit Club",
@@ -117,8 +117,8 @@ let businesses = {
 			"phone": "401-460-5648",
 			"url": "https://knit.club/",
 			"image": "assets/images/knitclub.jpg",
-			"latitude": 41.820476,
-			"longitude": -71.398466
+			"latitude": 41.82048299053234,
+			"longitude": -71.3984401376549
 		},
 		{
 			"name": "Dougie’s Office",

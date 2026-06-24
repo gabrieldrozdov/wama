@@ -5,14 +5,15 @@ function initEverything() {
 		map.remove();
 		map = null;
 	}
-	map = L.map('wama-guide-map', {closePopupOnClick: false}).setView([41.8194262,-71.3966686], 16.25);
+	map = L.map('wama-guide-map', {closePopupOnClick: false}).setView([41.8194262,-71.3966686], 15);
 	L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 		attribution: '© OpenStreetMap contributors © CARTO',
-		minZoom: 16,
+		minZoom: 14,
 		maxZoom: 19,
 	}).addTo(map);
 	map.setMaxBounds([[41.787997, -71.422022], [41.863128, -71.354635]]);
 	generateWAMAMap();
+	setTimeout(() => {map.flyTo([41.8194262,-71.3966686], 18);}, 250);
 }
 initEverything();
 
