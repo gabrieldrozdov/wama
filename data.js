@@ -71,14 +71,14 @@ let businesses = {
 			"longitude": -71.3985324
 		},
 		{
-			"name": "Bloom Collective",
+			"name": "Shop Bloom PVD",
 			"address": "243 Wickenden St.",
 			"googleMapsLink": "https://www.google.com/maps/place/Bloom+Collective/@41.8193495,-71.3983898,17z/data=!3m1!4b1!4m6!3m5!1s0x89e445e424c27f85:0x1499716159924366!8m2!3d41.8193495!4d-71.3983898!16s%2Fg%2F11mvn07kmv?entry=ttu&g_ep=EgoyMDI2MDYwMy4xIKXMDSoASAFQAw%3D%3D",
 			"phone": "",
 			"url": "https://www.wearebloomcollective.com/",
 			"image": "",
-			"latitude": 41.8193495,
-			"longitude": -71.3983898
+			"latitude": 41.819399,
+			"longitude": -71.398328
 		},
 		{
 			"name": "Urban Thread",
@@ -279,8 +279,8 @@ let businesses = {
 			"phone": "401-751-2477",
 			"url": "https://caspian-wickenden.com/",
 			"image": "assets/images/caspian.jpg",
-			"latitude": 41.8193495,
-			"longitude": -71.3983898
+			"latitude": 41.819392,
+			"longitude": -71.398510
 		},
 		{
 			"name": "The Point Tavern",
