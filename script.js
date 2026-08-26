@@ -1,3 +1,27 @@
+// --- Keep the vector basemap locked to the pins during flyTo ---
+// maplibre-gl-leaflet moves its camera with jumpTo() and then lets MapLibre
+// paint on its OWN requestAnimationFrame. Because that frame is scheduled
+// from inside Leaflet's animation frame, it runs one frame later — so the
+// basemap paints where the map was ~16ms ago while the pins are already at
+// the new position. At flyTo speeds that gap is tens of pixels of visible
+// slide. redraw() aborts the queued frame and renders synchronously, so the
+// streets and the pins land in the same painted frame.
+if (window.L && L.MaplibreGL) {
+	L.MaplibreGL.prototype._transformGL = function(gl) {
+		const center = this._map.getCenter();
+		gl.jumpTo({
+			center: [center.lng, center.lat],
+			zoom: this._map.getZoom() - 1
+		});
+		gl.redraw();
+	};
+	// The stock zoom handler only moves the camera; route it through the
+	// patched _transformGL above so zoom frames get the same treatment.
+	L.MaplibreGL.prototype._pinchZoom = function() {
+		if (this._map && this._glMap) this._transformGL(this._glMap);
+	};
+}
+
 // init map
 let map;
 function initEverything() {
@@ -5,11 +29,20 @@ function initEverything() {
 		map.remove();
 		map = null;
 	}
-	map = L.map('wama-guide-map', {closePopupOnClick: false}).setView([41.8194262,-71.3966686], 15);
-	L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-		attribution: '© OpenStreetMap contributors © CARTO',
+	map = L.map('wama-guide-map', {
+		closePopupOnClick: false,
 		minZoom: 14,
 		maxZoom: 19,
+	}).setView([41.8194262,-71.3966686], 15);
+
+	// OpenFreeMap “Positron” basemap — free, no API key, no request limits.
+	// Swap the style URL for another look: positron | bright | liberty | fiord | dark
+	L.maplibreGL({
+		style: 'https://tiles.openfreemap.org/styles/positron',
+		// stock is 32ms, which caps the basemap at ~31fps while the pins
+		// redraw every frame; 0 syncs it on every move instead
+		updateInterval: 0,
+		attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors © <a href="https://openfreemap.org/" target="_blank">OpenFreeMap</a> © <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a>',
 	}).addTo(map);
 	map.setMaxBounds([[41.787997, -71.422022], [41.863128, -71.354635]]);
 	generateWAMAMap();

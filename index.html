@@ -24,6 +24,13 @@
 	integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
 	crossorigin=""></script>
 
+	<!-- MapLibre GL: renders the OpenFreeMap vector basemap (no API key needed) -->
+	<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css">
+	<script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
+
+	<!-- Bridges MapLibre into Leaflet so all the marker/popup code below stays the same -->
+	<script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.4/leaflet-maplibre-gl.js"></script>
+
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
