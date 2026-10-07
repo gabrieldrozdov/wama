@@ -220,6 +220,16 @@ let businesses = {
 			"latitude": 41.8202967,
 			"longitude": -71.3934501
 		},
+		{
+			"name": "Olympic Records",
+			"address": "580 Wickenden St.",
+			"googleMapsLink": "https://www.google.com/maps/place/Olympic+Records/@41.8204003,-71.3914056,17z/data=!3m1!4b1!4m6!3m5!1s0x89e44537286b74ad:0xe759d8231b13e2d7!8m2!3d41.8204003!4d-71.3914056!16s%2Fg%2F1w3w4113?entry=ttu&g_ep=EgoyMDI2MTAwNC4wIKXMDSoASAFQAw%3D%3D",
+			"phone": "401-301-9266",
+			"url": "https://www.instagram.com/olympicrecords/",
+			"image": "",
+			"latitude": 41.820388689140735,
+			"longitude": -71.39140285224165
+		}
 	],
 	"Dine": [
 		{

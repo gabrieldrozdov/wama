@@ -7,7 +7,8 @@
 // slide. redraw() aborts the queued frame and renders synchronously, so the
 // streets and the pins land in the same painted frame.
 if (window.L && L.MaplibreGL) {
-	L.MaplibreGL.prototype._transformGL = function(gl) {
+	const proto = L.MaplibreGL.prototype;
+	proto._transformGL = function(gl) {
 		const center = this._map.getCenter();
 		gl.jumpTo({
 			center: [center.lng, center.lat],
@@ -15,10 +16,22 @@ if (window.L && L.MaplibreGL) {
 		});
 		gl.redraw();
 	};
-	// The stock zoom handler only moves the camera; route it through the
-	// patched _transformGL above so zoom frames get the same treatment.
-	L.MaplibreGL.prototype._pinchZoom = function() {
-		if (this._map && this._glMap) this._transformGL(this._glMap);
+
+	// The plugin freezes the basemap's position from zoomstart to zoomend,
+	// which is only right during Leaflet's CSS zoom animation (wheel/+/-).
+	// flyTo also fires zoomstart, so if anything pans the map pane mid-flight
+	// (like the popup's autoPan in showMapInfo) the basemap gets left behind
+	// and snaps back at zoomend. Only freeze during the real CSS animation.
+	proto._zoomStart = function() {};
+	const animateZoom = proto._animateZoom;
+	proto._animateZoom = function(e) {
+		this._zooming = true;
+		animateZoom.call(this, e);
+	};
+
+	// Zoom frames (flyTo, pinch) reposition the basemap AND move its camera
+	proto._pinchZoom = function() {
+		this._update();
 	};
 }
 
